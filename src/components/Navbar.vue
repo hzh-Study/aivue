@@ -1,14 +1,18 @@
 <script setup>
-
+import { useAdminStore } from "@/store";
 const handleCommand = (command) => {
   console.log(command);
-} 
+}
+
+const handleCollapse = () => {
+  useAdminStore().toggleCollapsed();
+}
 </script>
 
 <template>
   <div class="navbar">
     <div class="flex-box">
-      <el-button>
+      <el-button @click="handleCollapse">
         <el-icon>
           <Expand />
         </el-icon />

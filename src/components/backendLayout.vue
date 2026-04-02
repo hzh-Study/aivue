@@ -1,12 +1,19 @@
 <script setup>
-import SideBar from "./SideBar.vue";
+import SideBar from "./Sidebar.vue";
 import Navbar from "./Navbar.vue";
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import { useAdminStore } from "@/store";
+
+const adminStore = useAdminStore();
+const { isCollapsed } = storeToRefs(adminStore);
+const asideWidth = computed(() => (isCollapsed.value ? "64px" : "264px"));
 </script>
 
 <template>
   <div class="backend-layout">
     <el-container class="main-container">
-      <el-aside width="264px">
+      <el-aside :width="asideWidth" class="sidebar-aside">
         <SideBar />
       </el-aside>
       <el-container>
@@ -31,6 +38,12 @@ import Navbar from "./Navbar.vue";
 
   .main-container {
     height: 100%;
+
+    .sidebar-aside {
+      overflow: hidden;
+      // 禁用侧边栏宽度过渡，避免折叠时出现残留帧
+      transition: width 0s linear !important;
+    }
 
     .el-aside {
       height: 100%;
